@@ -1,0 +1,15 @@
+
+**CITATION.cff** (makes repo citable via GitHub's citation feature)
+
+```yaml
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Benjamin"
+  given-names: "Sir"
+  orcid: "https://orcid.org/your-orcid-if-you-have-one"
+title: "Spiral Recap Tool"
+version: 3.1
+date-released: 2026-02-01
+doi: 10.5281/zenodo.18450492
+url: "https://github.com/Sir-Benjamin-source/spiral-recap-tool"
