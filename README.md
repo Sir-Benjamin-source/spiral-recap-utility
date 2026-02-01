@@ -1,2 +1,20 @@
-# spiral-recap-tool
-Spiral Recap: Iterative framework for conversational continuity, data organization, and qualia-preserving summarization. Sestina routines + .srec format.
+# Spiral Recap Tool
+
+Iterative framework for efficient data organization, conversational continuity, and qualia-preserving summarization. Based on sestina-inspired routines from Spiral Theory.
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18450492.svg)](https://doi.org/10.5281/zenodo.18450492)
+
+## Overview
+
+Spiral Recap compresses histories/datasets into six routines, achieving high coherence and thematic depth. v3.1 adds qualia continuity (PIE vectors, poetic seals, .srec export) for reset-resistant sessions.
+
+Full documentation: [Zenodo v3.1](https://zenodo.org/records/18450492)
+
+## Quick Start
+
+1. Install dependencies (future: pip install -e .)
+2. Run example:
+   ```python
+   from src.spiral_recapp import spiral_recapp_v3_1
+   output = spiral_recapp_v3_1("Sample query", ["context1", "context2"])
+   print(output)
