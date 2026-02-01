@@ -19,8 +19,9 @@ Full documentation: [Zenodo v3.1](https://zenodo.org/records/18450492)
    output = spiral_recapp_v3_1("Sample query", ["context1", "context2"])
    print(output)
 
-See /examples/example.srec for a full output sample
-Example output: See `/examples/test.srec` (generated via the demo run).
+Example outputs:  
+- `/examples/continuity-test.srec` (generated via CLI demo)  
+- `/examples/example.srec` (static sample)
 
 ## Contributing & Future Work
 - Issues/PRs welcome for routine implementations, .srec parsers, or agent templates.
