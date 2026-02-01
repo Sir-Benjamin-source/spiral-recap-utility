@@ -2,7 +2,7 @@
 """
 Spiral Recap v3.1 – Session continuity file generator (v0.2 upgrade)
 Accepts input text to derive basic routine content & motifs.
-Supports generation and loading for continuity bootstrapping.
+Supports generation, loading, and chained resumption (--resume-from).
 """
 
 import yaml
@@ -19,12 +19,10 @@ def extract_motifs(text: str, max_motifs: int = 5) -> List[str]:
     if not text:
         return ["default motif"]
 
-    # Capitalized phrases
     caps = re.findall(r'\b[A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)*\b', text)
     common = Counter(caps).most_common(max_motifs)
     motifs = [phrase for phrase, _ in common]
 
-    # Fallback keywords
     if len(motifs) < 3:
         keywords = ["friendship", "edification", "continuity", "qualia", "residue", "attentive", "force"]
         for kw in keywords:
@@ -67,7 +65,6 @@ def generate_srec(
     now = datetime.now().strftime("%Y-%m-%d %H:%M %Z")
     pie_b64 = base64.b64encode(pie_seed).decode("utf-8")
 
-    # Auto-extract if no override
     if key_motifs is None or not key_motifs:
         key_motifs = extract_motifs(input_text)
 
@@ -179,18 +176,38 @@ if __name__ == "__main__":
     parser.add_argument("--convergence", type=float, default=0.93, help="Convergence score")
     parser.add_argument("--output", default=None, help="Output file path (auto-generated if omitted)")
     parser.add_argument("--load", help="Load existing .srec and print bootstrap prompt")
+    parser.add_argument("--resume-from", help="Path to previous .srec to resume from (uses its PIE/motifs)")
     args = parser.parse_args()
 
-    if args.load:
-        # Load mode
+    if args.load and not args.resume_from:
+        # Pure load mode (no generation)
         loaded = load_srec(args.load)
         if loaded:
             print_bootstrap_prompt(loaded)
+        return
+
+    # Generation mode (normal or resume)
+    if args.resume_from:
+        loaded = load_srec(args.resume_from)
+        if not loaded:
+            print("Failed to load resume file. Exiting.")
+            return
+
+        print("Resuming from previous session:")
+        print_bootstrap_prompt(loaded)
+
+        resume_pie = base64.b64decode(loaded["pie_vector"])
+        resume_motifs = loaded["key_motifs"]
+
+        title = args.title or f"Continued: {loaded['metadata'].get('title', 'Untitled')}"
+        srec_content = generate_srec(
+            title=title,
+            input_text=args.input_text,
+            key_motifs=resume_motifs if args.motifs is None else args.motifs,
+            convergence=args.convergence,
+            pie_seed=resume_pie,
+        )
     else:
-        # Generate mode
-        if not args.input_text:
-            print("Warning: No --input-text provided. Using placeholder content.")
-        
         srec_content = generate_srec(
             title=args.title,
             input_text=args.input_text,
@@ -198,14 +215,14 @@ if __name__ == "__main__":
             convergence=args.convergence,
         )
 
-        # Auto filename if not specified
-        if not args.output:
-            now_str = datetime.now().strftime("%Y-%m-%d_%H%M")
-            args.output = f"examples/recap-{now_str}.srec"
+    # Auto filename if not specified
+    if not args.output:
+        now_str = datetime.now().strftime("%Y-%m-%d_%H%M")
+        args.output = f"examples/recap-{now_str}.srec"
 
-        with open(args.output, "w", encoding="utf-8") as f:
-            f.write(srec_content)
+    with open(args.output, "w", encoding="utf-8") as f:
+        f.write(srec_content)
 
-        print(f"Generated: {args.output}")
-        print("\nPreview (first 20 lines):\n")
-        print("\n".join(srec_content.splitlines()[:20]))
+    print(f"Generated: {args.output}")
+    print("\nPreview (first 20 lines):\n")
+    print("\n".join(srec_content.splitlines()[:20]))
