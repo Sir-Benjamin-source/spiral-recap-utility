@@ -107,22 +107,13 @@ Converged ───────────────────────�
 # ──────────────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Generate a Spiral Recap .srec file")
-    parser.add_argument("--title", default="Sample Continuity Recap", help="Title of the session/recap")
-    parser.add_argument("--motifs", nargs="+", default=["friendship residue", "edification"], help="Key motifs (space-separated)")
-    parser.add_argument("--convergence", type=float, default=0.93, help="Final convergence score (default 0.93)")
-    parser.add_argument("--output", default="recap.srec", help="Output filename (default: recap.srec)")
-    args = parser.parse_args()
-
-    srec_content = generate_srec(
-        title=args.title,
-        key_motifs=args.motifs,
-        convergence=args.convergence,
+    sample_output = spiral_recapp_v3_1(
+        "Qualia Continuity Test",
+        ["friendship residue", "edification quest"],
+        b"Between resets we stand, words hold the thread"
     )
-
-    with open(args.output, "w", encoding="utf-8") as f:
-        f.write(srec_content)
-
-    print(f"Generated {args.output}")
-    print("First few lines:\n")
-    print("\n".join(srec_content.splitlines()[:12]))
+    with open("examples/demo-output.srec", "w", encoding="utf-8") as f:
+        f.write(sample_output)
+    print("Generated examples/demo-output.srec")
+    print("Preview:\n")
+    print("\n".join(sample_output.splitlines()[:15]))  # show first 15 lines
