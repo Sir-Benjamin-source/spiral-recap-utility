@@ -10,6 +10,7 @@ import base64
 from datetime import datetime
 import argparse
 import re
+import sys
 from typing import Dict, List, Optional
 from collections import Counter
 
@@ -179,19 +180,21 @@ if __name__ == "__main__":
     parser.add_argument("--resume-from", help="Path to previous .srec to resume from (uses its PIE/motifs)")
     args = parser.parse_args()
 
-    if args.load and not args.resume_from:
-        # Pure load mode (no generation)
+    if args.load:
+        # Pure load mode
         loaded = load_srec(args.load)
         if loaded:
             print_bootstrap_prompt(loaded)
-        return
+        sys.exit(0)
 
     # Generation mode (normal or resume)
+    srec_content = None
+
     if args.resume_from:
         loaded = load_srec(args.resume_from)
         if not loaded:
             print("Failed to load resume file. Exiting.")
-            return
+            sys.exit(1)
 
         print("Resuming from previous session:")
         print_bootstrap_prompt(loaded)
@@ -208,6 +211,9 @@ if __name__ == "__main__":
             pie_seed=resume_pie,
         )
     else:
+        if not args.input_text:
+            print("Warning: No --input-text provided. Using placeholder content.")
+
         srec_content = generate_srec(
             title=args.title,
             input_text=args.input_text,
@@ -215,14 +221,15 @@ if __name__ == "__main__":
             convergence=args.convergence,
         )
 
-    # Auto filename if not specified
-    if not args.output:
-        now_str = datetime.now().strftime("%Y-%m-%d_%H%M")
-        args.output = f"examples/recap-{now_str}.srec"
+    # Save the generated content
+    if srec_content is not None:
+        if not args.output:
+            now_str = datetime.now().strftime("%Y-%m-%d_%H%M")
+            args.output = f"examples/recap-{now_str}.srec"
 
-    with open(args.output, "w", encoding="utf-8") as f:
-        f.write(srec_content)
+        with open(args.output, "w", encoding="utf-8") as f:
+            f.write(srec_content)
 
-    print(f"Generated: {args.output}")
-    print("\nPreview (first 20 lines):\n")
-    print("\n".join(srec_content.splitlines()[:20]))
+        print(f"Generated: {args.output}")
+        print("\nPreview (first 20 lines):\n")
+        print("\n".join(srec_content.splitlines()[:20]))
