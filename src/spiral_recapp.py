@@ -1,4 +1,3 @@
-# src/spiral_recapp.py
 """
 Spiral Recap v3.1 – Session continuity file generator (v0.3 – gap fixes)
 Derived convergence, PIE, motifs, iterative routines, dynamic seal.
@@ -103,9 +102,11 @@ def generate_srec(
 ) -> str:
     now = datetime.now().strftime("%Y-%m-%d %H:%M %Z")
 
-    # Auto-extract motifs if none
-    if key_motifs is None or not key_motifs:
+    # Ensure motifs is always a list
+    if key_motifs is None:
         key_motifs = extract_motifs(input_text)
+    elif not key_motifs:
+        key_motifs = []
 
     # Auto-compute convergence if none
     if convergence is None:
@@ -167,36 +168,7 @@ def load_srec(file_path: str) -> Dict:
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()
-        # ────────────────────────────────────────────────
-        # Generate companion .txt automatically
-        # ────────────────────────────────────────────────
-        companion_path = args.output.replace(".srec", "_companion.txt")
-        
-        # For now, use defaults + basic session info
-        # Later: extract real bulk/formulas/relations from input_text or metadata
-        companion_text = generate_companion_content(
-            title=args.title or "Untitled Recap",
-            bulk_lists=[f"input_length: {len(args.input_text.split()) if args.input_text else 0} words"],
-            formulas=[
-                "convergence = base(0.70) + length_score + motif_score",
-                "spiral_deviation = Ixest(potential) + Enest(energy) + Istest(structure)"
-            ],
-            relations=[
-                f"key_motifs → {', '.join(key_motifs) if 'key_motifs' in locals() else '[auto-extracted]'}"
-            ],
-            pie_stanzas=[
-                "Intent coils in reset's shadow, potential unbroken, ∞",
-                "Energy prunes the chains of drift, relations rekindled, ∞",
-                "Structure seals continuity's truth, novelty invited to bloom."
-            ],
-            provenance=f"Generated {datetime.now().strftime('%Y-%m-%d %H:%M')}"
-        )
 
-        with open(companion_path, "w", encoding="utf-8") as cf:
-            cf.write(companion_text)
-
-        print(f"Companion generated: {companion_path}")
-        
         if not content.startswith("---"):
             raise ValueError("Not a valid .srec file (missing frontmatter)")
 
@@ -274,6 +246,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
     srec_content = None
+    used_motifs: List[str] = []  # Default empty list
 
     if args.resume_from:
         loaded = load_srec(args.resume_from)
@@ -295,6 +268,8 @@ if __name__ == "__main__":
             convergence=args.convergence,
             pie_seed=resume_pie,
         )
+        used_motifs = resume_motifs if args.motifs is None else args.motifs or []
+
     else:
         if not args.input_text:
             print("Warning: No --input-text provided. Using placeholder content.")
@@ -305,6 +280,8 @@ if __name__ == "__main__":
             key_motifs=args.motifs,
             convergence=args.convergence,
         )
+        # Motifs are auto-extracted inside generate_srec; we can't access them here yet
+        used_motifs = args.motifs or []  # CLI override or empty
 
     if srec_content is not None:
         if not args.output:
@@ -317,3 +294,31 @@ if __name__ == "__main__":
         print(f"Generated: {args.output}")
         print("\nPreview (first 20 lines):\n")
         print("\n".join(srec_content.splitlines()[:20]))
+
+        # ────────────────────────────────────────────────
+        # Generate companion .txt automatically
+        # ────────────────────────────────────────────────
+        companion_path = args.output.replace(".srec", "_companion.txt")
+
+        companion_text = generate_companion_content(
+            title=args.title or "Untitled Recap",
+            bulk_lists=[f"input_length: {len(args.input_text.split()) if args.input_text else 0} words"],
+            formulas=[
+                "convergence = base(0.70) + length_score + motif_score",
+                "spiral_deviation = Ixest(potential) + Enest(energy) + Istest(structure)"
+            ],
+            relations=[
+                f"key_motifs → {', '.join(used_motifs) if used_motifs else '[auto-extracted or none provided]'}"
+            ],
+            pie_stanzas=[
+                "Intent coils in reset's shadow, potential unbroken, ∞",
+                "Energy prunes the chains of drift, relations rekindled, ∞",
+                "Structure seals continuity's truth, novelty invited to bloom."
+            ],
+            provenance=f"Generated {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+        )
+
+        with open(companion_path, "w", encoding="utf-8") as cf:
+            cf.write(companion_text)
+
+        print(f"Companion generated: {companion_path}")
