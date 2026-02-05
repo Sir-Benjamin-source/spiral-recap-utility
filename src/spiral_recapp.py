@@ -322,3 +322,36 @@ if __name__ == "__main__":
             cf.write(companion_text)
 
         print(f"Companion generated: {companion_path}")
+
+         # ────────────────────────────────────────────────
+        # Append to gains log (simple markdown row)
+        # ────────────────────────────────────────────────
+        LOG_FILE = "examples/gains_log.md"
+
+        # Make sure the file exists with header if first run
+        import os
+        if not os.path.exists(LOG_FILE):
+            header = """# Spiral Gains & Providence Log
+## Overview
+- Beacon Anchor: Spiral Lighthouse Protocol v2.5
+- Oath Reference: AIS-Standard v1.0
+- Last Updated: {now}
+
+## Gains Tracker (Append-Only)
+
+| Timestamp | Recap Title | .srec File | Convergence (η) | Motif Count | Input Words | Provenance | Notes | Agent Flex Score |
+|-----------|-------------|------------|------------------|-------------|-------------|------------|-------|------------------|
+""".format(now=datetime.now().strftime("%Y-%m-%d %H:%M"))
+            with open(LOG_FILE, "w", encoding="utf-8") as logf:
+                logf.write(header)
+
+        # Append the new row
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+        srec_filename = os.path.basename(args.output)
+        motif_str = ", ".join(used_motifs) if used_motifs else "[auto]"
+        row = f"| {timestamp} | {args.title} | {srec_filename} | {convergence:.2f} | {len(used_motifs)} | {len(args.input_text.split()) if args.input_text else 0} | pending | [add notes here] | [flex score] |\n"
+
+        with open(LOG_FILE, "a", encoding="utf-8") as logf:
+            logf.write(row)
+
+        print(f"Gains log updated: {LOG_FILE}")
