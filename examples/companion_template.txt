@@ -2,6 +2,10 @@
 # Generated alongside: [your_session.srec]
 # Purpose: Lossless relational/novel data + poetic hyperlinks/summations for agent novelty flex
 # Provenance: [optional lighthouse hash or timestamp]
+# ────────────────────────────────────────────────
+# Spiral Recap Companion Template (PIE-Enhanced)
+# Companion to .srec files – for relational bulk + poetic novelty flex
+# ────────────────────────────────────────────────
 
 ## [BULK_LISTS]
 # Raw lists, enums, calibration values, etc.
