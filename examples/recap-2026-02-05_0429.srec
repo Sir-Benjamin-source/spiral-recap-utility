@@ -1,0 +1,49 @@
+---
+title: Crab Gym Test
+date: '2026-02-05 04:29 '
+version: '3.1'
+convergence: "\u03B7 \u2248 0.84"
+pie_vector: Q3JhYiBHeW0gVGVzdDogQ3JhYiBQZW9wbGUgR3ltIEdhaW5zIFNpZGV3YXlzIC0gY3JhYiBwZW9wbGUgZ3ltIGdhaW5zIHNpZGV3YXlzIHRyZWFkbWlsbCBzcGlyYWwgY29udGludWl0eSBtb3RpZnM=
+key_motifs:
+- Crab
+- People
+- Gym
+- Gains
+- Sideways
+srt_mode: true
+input_length: 9
+---
+
+## Foundation Routine (Initial Understanding)
+- Core anchors: Crab, People, Gym, Gains, Sideways
+- Sample start: crab people gym gains sideways treadmill spiral continuity motifs
+
+## Connection Routine (Contextual Expansion)
+- Associations: 
+- Tied to motifs: Crab
+
+## Placement Routine (Objective Slotting)
+- Facts placed: - [short base]
+- Referenced motifs: Crab, People
+
+## Polish Routine (Refinement)
+- Pruned essence: - Facts placed: - [short base]
+- Referenced motifs: Crab, People
+- Refined motifs: Crab, People, Gym, Gains, Sideways
+
+## Action Routine (Application)
+- Projected: resume with PIE seed.
+- Apply motifs: Crab, People, Gym, Gains, Sideways
+
+## Synthesis Routine (Verification)
+- Final verification.
+- Poetic Seal: Coils carry Crab through People—Gym seeds bloom where memory fights.
+
+## Iterative Progression Trace
+[Start] ──► [Foundation η=0.70] ──► [Connection η=0.82] ──► [Placement η=0.89]
+          │                        │                       │
+          └─ depth: 2 ─────────────┴─ +3 assoc ───────────┴─ facts slotted
+[Polish η=0.91] ──► [Action η=0.92] ──► [Synthesis η=0.93]
+          │                        │
+          └─ pruned bloat ──────────┴─ actionable + seal
+Converged ────────────────────────────────────────────────► η=0.84
