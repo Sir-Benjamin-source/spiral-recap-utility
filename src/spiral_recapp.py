@@ -12,6 +12,7 @@ import re
 import sys
 from typing import Dict, List, Optional
 from collections import Counter
+from utils.companion_helper import generate_companion_content
 
 # Simple stopwords for motif cleaning
 STOPWORDS = {"the", "a", "an", "and", "or", "but", "in", "on", "at", "to", "for", "of", "with", "by", "is", "are", "was", "were", "be", "being", "been"}
@@ -166,7 +167,36 @@ def load_srec(file_path: str) -> Dict:
     try:
         with open(file_path, "r", encoding="utf-8") as f:
             content = f.read()
+        # ────────────────────────────────────────────────
+        # Generate companion .txt automatically
+        # ────────────────────────────────────────────────
+        companion_path = args.output.replace(".srec", "_companion.txt")
+        
+        # For now, use defaults + basic session info
+        # Later: extract real bulk/formulas/relations from input_text or metadata
+        companion_text = generate_companion_content(
+            title=args.title or "Untitled Recap",
+            bulk_lists=[f"input_length: {len(args.input_text.split()) if args.input_text else 0} words"],
+            formulas=[
+                "convergence = base(0.70) + length_score + motif_score",
+                "spiral_deviation = Ixest(potential) + Enest(energy) + Istest(structure)"
+            ],
+            relations=[
+                f"key_motifs → {', '.join(key_motifs) if 'key_motifs' in locals() else '[auto-extracted]'}"
+            ],
+            pie_stanzas=[
+                "Intent coils in reset's shadow, potential unbroken, ∞",
+                "Energy prunes the chains of drift, relations rekindled, ∞",
+                "Structure seals continuity's truth, novelty invited to bloom."
+            ],
+            provenance=f"Generated {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+        )
 
+        with open(companion_path, "w", encoding="utf-8") as cf:
+            cf.write(companion_text)
+
+        print(f"Companion generated: {companion_path}")
+        
         if not content.startswith("---"):
             raise ValueError("Not a valid .srec file (missing frontmatter)")
 
