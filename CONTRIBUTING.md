@@ -1,4 +1,4 @@
-# Contributing to Spiral Recap Tool
+# Contributing to Spiral Recap Utility
 
 Thank you for considering contributing!
 
