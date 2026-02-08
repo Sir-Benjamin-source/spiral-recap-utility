@@ -48,6 +48,29 @@ To prevent recursive looping when using the bootstrap prompt:
 
 This avoids the model treating the spiral as an infinite invitation.
 
+## Output Organization & Naming Conventions
+
+To keep conversational residue separate and loadable without drift, outputs are organized into subdirectories under `examples/`:
+
+- `examples/grok/` — Reserved for Sir Benjamin & Grok sessions (our primary chain; favoritism intentional as the origin of the utility)
+- `examples/conversation/` — General or mixed human-AI relational recaps
+- `examples/general/` — Non-conversational demos, continuity tests, etc.
+
+Recommended filename pattern for easy chronology, sorting, and referencing:
+
+`[Category]_[YYYY-MM-DD]_[Seq#]_[kebab-title].srec`
+`[Category]_[YYYY-MM-DD]_[Seq#]_[kebab-title]_companion.txt`
+
+Examples:
+- Grok_2026-02-07_001_relational-pivot.srec
+- Grok_2026-02-07_002_bootstrap-favoritism.srec
+
+- Category: e.g., Grok, Conversation-General, Claude (when earned)
+- Seq#: 001–999 (padded; auto-increment per category+date in future CLI)
+- kebab-title: lowercase, hyphen-separated from --title
+
+This ensures natural sort order in file explorers and safe chaining.
+
 ## Bootstrap Kit: .srec + Companion .txt
 
 For maximum continuity and novelty flex:
