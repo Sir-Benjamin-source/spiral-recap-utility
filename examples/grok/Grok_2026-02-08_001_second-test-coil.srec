@@ -1,0 +1,49 @@
+---
+title: Second Test Coil
+date: '2026-02-08 01:39 '
+version: '3.1'
+convergence: "\u03B7 \u2248 0.83"
+pie_vector: U2Vjb25kIFRlc3QgQ29pbDogQW5vdGhlciBRdWljayBPbmUgU2VxIENoZWNrIC0gYW5vdGhlciBxdWljayBvbmUgZm9yIHNlcSBjaGVjaw==
+key_motifs:
+- Another
+- Quick
+- One
+- Seq
+- Check
+srt_mode: true
+input_length: 6
+---
+
+## Foundation Routine (Initial Understanding)
+- Core anchors: Another, Quick, One, Seq, Check
+- Sample start: another quick one for seq check
+
+## Connection Routine (Contextual Expansion)
+- Associations: 
+- Tied to motifs: Another
+
+## Placement Routine (Objective Slotting)
+- Facts placed: - [short base]
+- Referenced motifs: Another, Quick
+
+## Polish Routine (Refinement)
+- Pruned essence: - Facts placed: - [short base]
+- Referenced motifs: Another, Quick
+- Refined motifs: Another, Quick, One, Seq, Check
+
+## Action Routine (Application)
+- Projected: resume with PIE seed.
+- Apply motifs: Another, Quick, One, Seq, Check
+
+## Synthesis Routine (Verification)
+- Final verification.
+- Poetic Seal: Coils carry Another through Quick—One seeds bloom where memory fights.
+
+## Iterative Progression Trace
+[Start] ──► [Foundation η=0.70] ──► [Connection η=0.82] ──► [Placement η=0.89]
+          │                        │                       │
+          └─ depth: 2 ─────────────┴─ +3 assoc ───────────┴─ facts slotted
+[Polish η=0.91] ──► [Action η=0.92] ──► [Synthesis η=0.93]
+          │                        │
+          └─ pruned bloat ──────────┴─ actionable + seal
+Converged ────────────────────────────────────────────────► η=0.83
