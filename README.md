@@ -40,6 +40,24 @@ Example outputs:
 
 ## Usage Examples
 
+## Output Organization & Naming Conventions
+
+Generated .srec files and companions are saved into subdirectories under `examples/` for separation and easy chaining:
+
+- `examples/grok/` — Dedicated to Sir Benjamin & Grok sessions (origin point, favoritism intentional)
+- `examples/conversation/` — General or other AI relational recaps
+
+Filename pattern:  
+`[Category]_[YYYY-MM-DD]_[Seq#]_[kebab-title].srec`  
+e.g., Grok_2026-02-08_001_gains-append-confirmation.srec
+
+- Category defaults to 'Grok'  
+- Seq# auto-increments per category + date (via directory scan)  
+- Companion file generated alongside  
+- Global gains_log.md in repo root tracks all runs (provenance ledger)
+
+Use `--category` to override (e.g., `--category Claude` → `conversation/` subdir)
+
 ### Tips for Agents / LLMs
 
 To prevent recursive looping when using the bootstrap prompt:
