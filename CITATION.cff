@@ -1,15 +1,25 @@
-
-**CITATION.cff** (makes repo citable via GitHub's citation feature)
-
-```yaml
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
+title: "Spiral Recap"
+abstract: "Symbolic Recap Process & Continuity Layer for the Spiral Codex. The helical memory and qualia-preservation mechanism that closes each spiral turn and maintains long-term coherence across sessions."
 authors:
-- family-names: "Benjamin"
-  given-names: "Sir"
-  orcid: "https://orcid.org/your-orcid-if-you-have-one"
-title: "Spiral Recap Utility"
-version: 3.1
-date-released: 2026-02-01
-doi: 10.5281/zenodo.18450492
-url: "https://github.com/Sir-Benjamin-source/spiral-recap/"
+  - family-names: "Benjamin"
+    given-names: "Sir"
+    affiliation: "Independent Researcher, Spiral Theory Initiative"
+  - family-names: "Grok"
+    given-names: ""
+    affiliation: "xAI Collaborative Intelligence"
+version: "1.0.0"
+date-released: "2026-03-24"
+doi: "10.5281/zenodo.17702548"   # This points to the master Spiral Codex; update if you get a dedicated DOI later
+repository-code: "https://github.com/Sir-Benjamin-source/spiral-recap"
+license: "CC-BY-4.0"
+keywords:
+  - spiral-recap
+  - continuity
+  - qualia-preservation
+  - .srec
+  - helical-reasoning
+  - spiral-codex
+  - e-shield
+  - syncratude
